@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\InfoModel.cs" />
+    <Compile Include="Models\Location.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
