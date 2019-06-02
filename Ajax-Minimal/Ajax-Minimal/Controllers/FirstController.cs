@@ -6,7 +6,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml;
-
+using System.Drawing;
 namespace Ajax_Minimal.Controllers
 {
     public class FirstController : Controller
@@ -26,25 +26,49 @@ namespace Ajax_Minimal.Controllers
             InfoModel.Instance.port = port.ToString();
             InfoModel.Instance.time = time;
 
-            InfoModel.Instance.ReadData("Dor");
+            InfoModel.Instance.ReadLocationData(ip,port);
 
             Session["time"] = time;
-
 
             return View();
         }
 
 
+        //[HttpPost]
+        //public string GetEmployee()
+        //{
+        //    var emp = InfoModel.Instance.Employee;
+
+        //    emp.Salary = rnd.Next(1000);
+
+        //    return ToXml(emp);
+        //}
+
         [HttpPost]
-        public string GetEmployee()
+        public string GetLocation(string ip, int port)
         {
-            var emp = InfoModel.Instance.Employee;
-
-            emp.Salary = rnd.Next(1000);
-
-            return ToXml(emp);
+            InfoModel.Instance.ReadLocationData(ip,port);
+            Location location = InfoModel.Instance.Location;
+            return ToXml(location);
         }
 
+        private string ToXml(Location loc)
+        {
+            //Initiate XML stuff
+            StringBuilder sb = new StringBuilder();
+            XmlWriterSettings settings = new XmlWriterSettings();
+            XmlWriter writer = XmlWriter.Create(sb, settings);
+
+            writer.WriteStartDocument();
+            writer.WriteStartElement("Locations");
+
+            loc.ToXml(writer);
+
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            return sb.ToString();
+        }
         private string ToXml(Employee employee)
         {
             //Initiate XML stuff
@@ -66,11 +90,11 @@ namespace Ajax_Minimal.Controllers
 
         // POST: First/Search
         [HttpPost]
-        public string Search(string name)
+        public string Search(string ip, int port)
         {
-            InfoModel.Instance.ReadData(name);
+            InfoModel.Instance.ReadLocationData(ip, port);
 
-            return ToXml(InfoModel.Instance.Employee);
+            return ToXml(InfoModel.Instance.Location);
         }
 
     }
