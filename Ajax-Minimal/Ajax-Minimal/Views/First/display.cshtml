@@ -7,11 +7,11 @@
 <body background="~/worldMap.png" style="background-size:cover">
     <h2>display</h2>
     <div>
-        <h2>Employee json Get</h2>
+        <h2>Location json Get</h2>
         <table>
             <tr>
-                <td>Id:  </td>
-                <td><p type="text" id="prodId" size="5"></p></td>
+                <td>Lat:  </td>
+                <td><p type="text" id="latId" size="5"></p></td>
             </tr>
             <tr>
                 <td>Name:  </td>
@@ -36,16 +36,14 @@
     <script>
     var IntervalTime = @Session["time"] * 1000
     myTimer = (function () {
-        $.post( "@Url.Action("GetEmployee")").done(function (xml) {
+        $.post( "@Url.Action("GetLocation")").done(function (xml) {
                 var xmlDoc = $.parseXML( xml ),
                 $xml = $( xmlDoc ),
-                FirstName = $xml.find( "FirstName" ).text();
-                LastName = $xml.find( "LastName" ).text();
-                Salary = $xml.find("Salary").text();
+                Lat = $xml.find( "Lat" ).text();
+                Lon = $xml.find( "Lon" ).text();
 
-                $("#prodId").text(FirstName);
-                $("#prodName").text(LastName);
-                $("#prodSalary").text(Salary);
+                $("#latId").text(Lat);
+                $("#LonId").text(LastName);
 
         });
     });
