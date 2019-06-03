@@ -30,11 +30,19 @@
             LocationReadModel = new LocationReadModel();
         }
 
+        /// <summary>
+        /// Connect to the server, read the Lat and the Lon, and disconnect. 
+        /// Save them in the Location property
+        /// </summary>
+        /// <param name="ip">The ip of the socket of communication with the FlightGear server</param>
+        /// <param name="port">The port of the socket of communication</param>
         public void ReadLocationData(string ip, int port)
         {
             LocationReadModel.ReadLocationData(ip, port);
             Location = LocationReadModel.Location;
         }
+
+
 
     }
 }

@@ -328,3 +328,4 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+/Ajax-Minimal/Ajax-Minimal/Models/State Save/StatsModel.cs
