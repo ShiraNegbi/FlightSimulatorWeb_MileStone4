@@ -18,6 +18,9 @@ namespace Ajax_Minimal
 
             routes.MapRoute("display", "display/{ip}/{port}/{time}",
             defaults: new { controller = "First", action = "display" });
+             
+            routes.MapRoute("index", "display/{ip}/{port}",
+            defaults: new { controller = "First", action = "index" });
 
 
             routes.MapRoute(

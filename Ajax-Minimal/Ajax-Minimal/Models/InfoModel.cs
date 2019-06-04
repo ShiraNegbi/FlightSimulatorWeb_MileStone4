@@ -18,9 +18,14 @@
         }
 
         public Location Location { get; private set; }
-        public string ip { get; set; }
-        public string port { get; set; }
-        public int time { get; set; }
+        public string Ip { get; set; }
+
+        private double port;
+        public string Port {
+            get { return port.ToString(); }
+            set { port = double.Parse(value); }
+        }
+        //public int time { get; set; }
 
         private LocationReadModel LocationReadModel { get; set; }
 
@@ -36,9 +41,9 @@
         /// </summary>
         /// <param name="ip">The ip of the socket of communication with the FlightGear server</param>
         /// <param name="port">The port of the socket of communication</param>
-        public void ReadLocationData(string ip, int port)
+        public void ReadLocationData()
         {
-            LocationReadModel.ReadLocationData(ip, port);
+            LocationReadModel.ReadLocationData(Ip, Port);
             Location = LocationReadModel.Location;
         }
 

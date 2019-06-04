@@ -22,8 +22,8 @@ namespace Ajax_Minimal.Controllers
         [HttpGet]
         public ActionResult display(string ip, int port, int time)
         {
-            InfoModel.Instance.ip = ip;
-            InfoModel.Instance.port = port.ToString();
+            InfoModel.Instance.Ip = ip;
+            InfoModel.Instance.Port = port.ToString();
             InfoModel.Instance.time = time;
 
             //InfoModel.Instance.ReadLocationData(ip,port);
@@ -45,9 +45,9 @@ namespace Ajax_Minimal.Controllers
         //}
 
         [HttpPost]
-        public string GetLocation(string ip, int port)
+        public string GetLocation(/*string ip, int port*/)
         {
-            InfoModel.Instance.ReadLocationData(ip,port);
+            //InfoModel.Instance.ReadLocationData(ip,port);
             Location location = InfoModel.Instance.Location;
             return ToXml(location);
         }
