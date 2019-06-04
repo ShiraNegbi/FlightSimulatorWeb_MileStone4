@@ -45,9 +45,9 @@ namespace Ajax_Minimal.Controllers
         //}
 
         [HttpPost]
-        public string GetLocation(string ip, int port)
+        public string GetLocation(/*string ip, int port*/)
         {
-            InfoModel.Instance.ReadLocationData(ip,port);
+            //InfoModel.Instance.ReadLocationData(ip,port);
             Location location = InfoModel.Instance.Location;
             return ToXml(location);
         }
