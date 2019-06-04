@@ -38,11 +38,11 @@
                 $xml = $( xmlDoc ),
                 Lat = $xml.find("Lat").text();
                 Lon = $xml.find("Lon").text();
-            Lat = ((parseFloat(Lat) + 90) * (canvas.width) / 180);
+                Lat = ((parseFloat(Lat) + 90) * (canvas.width) / 180);
                 Lon = ((parseFloat(Lon) + 180) * (canvas.width) / 360.0);
                 $("#LatId").text(Lat);
-            $("#LonId").text(Lon);
-            context.drawImage(img, Lon, Lat, 22, 15);
+                $("#LonId").text(Lon);
+                context.drawImage(img, Lon, Lat, 22, 15);
         });
     });
 
