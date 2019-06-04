@@ -26,7 +26,7 @@ namespace Ajax_Minimal.Controllers
             InfoModel.Instance.port = port.ToString();
             InfoModel.Instance.time = time;
 
-            InfoModel.Instance.ReadLocationData(ip,port);
+            //InfoModel.Instance.ReadLocationData(ip,port);
 
             Session["time"] = time;
 
@@ -89,11 +89,11 @@ namespace Ajax_Minimal.Controllers
 
 
         // POST: First/Search
+        //Is it needed? Maybe delete this
         [HttpPost]
         public string Search(string ip, int port)
         {
             InfoModel.Instance.ReadLocationData(ip, port);
-
             return ToXml(InfoModel.Instance.Location);
         }
 
