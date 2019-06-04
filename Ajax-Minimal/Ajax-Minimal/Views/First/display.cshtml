@@ -4,9 +4,9 @@
 }
 
 <style>
-    html , body {
-        height:100%;
-        width:100%;
+    html, body {
+        height: 100%;
+        width: 100%;
     }
 </style>
 
@@ -24,7 +24,7 @@
                 <td><p type="text" id="LonId" size="5"></p></td>
             </tr>
         </table>
-            <img id="Cookie" src="~/Cookie1.png" width="0" height="0"/>
+        <img id="Cookie" src="~/Cookie1.png" width="0" height="0" />
     </div>
     <canvas id="canvas" height="700" widht="1000"></canvas>
     <script>
@@ -37,7 +37,7 @@
                 var xmlDoc = $.parseXML( xml ),
                 $xml = $( xmlDoc ),
                 Lat = $xml.find("Lat").text();
-            Lon = $xml.find("Lon").text();
+                Lon = $xml.find("Lon").text();
             Lat = ((parseFloat(Lat) + 90) * (canvas.width) / 180);
                 Lon = ((parseFloat(Lon) + 180) * (canvas.width) / 360.0);
                 $("#LatId").text(Lat);
@@ -48,21 +48,6 @@
 
     setInterval(myTimer, IntervalTime);
     myTimer();
-
-    @*$("#btnSearch").click(function () {
-        var input = {
-            name: $("#NameID").val(),
-        };
-        $.post("@Url.Action("Search", "First")", input).done(function (data) {
-            var xmlDoc = $.parseXML(data),
-                $xml = $(xmlDoc),
-                FirstName = $xml.find("FirstName").text();
-            LastName = $xml.find("LastName").text();
-            Salary = $xml.find("Salary").text();
-
-            $("#lstProducts").append("<li>" + FirstName + " " + LastName + " : $" + Salary + "</li>");
-        });
-        });*@
 
         //function resizeCanvas() {
         //    canvas.width = window.innerWidth;
