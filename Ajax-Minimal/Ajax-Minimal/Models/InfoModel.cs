@@ -20,10 +20,10 @@
         public Location Location { get; private set; }
         public string Ip { get; set; }
 
-        private double port;
+        private int port;
         public string Port {
             get { return port.ToString(); }
-            set { port = double.Parse(value); }
+            set { port = int.Parse(value); }
         }
         //public int time { get; set; }
 
@@ -43,7 +43,7 @@
         /// <param name="port">The port of the socket of communication</param>
         public void ReadLocationData()
         {
-            LocationReadModel.ReadLocationData(Ip, Port);
+            LocationReadModel.ReadLocationData(Ip, port);
             Location = LocationReadModel.Location;
         }
 

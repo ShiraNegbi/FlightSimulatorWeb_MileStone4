@@ -24,7 +24,7 @@ namespace Ajax_Minimal.Controllers
         {
             InfoModel.Instance.Ip = ip;
             InfoModel.Instance.Port = port.ToString();
-            InfoModel.Instance.time = time;
+            //InfoModel.Instance.time = time;
 
             //InfoModel.Instance.ReadLocationData(ip,port);
 
@@ -47,7 +47,7 @@ namespace Ajax_Minimal.Controllers
         [HttpPost]
         public string GetLocation(/*string ip, int port*/)
         {
-            //InfoModel.Instance.ReadLocationData(ip,port);
+            InfoModel.Instance.ReadLocationData();
             Location location = InfoModel.Instance.Location;
             return ToXml(location);
         }
@@ -88,14 +88,14 @@ namespace Ajax_Minimal.Controllers
         }
 
 
-        // POST: First/Search
-        //Is it needed? Maybe delete this
-        [HttpPost]
-        public string Search(string ip, int port)
-        {
-            InfoModel.Instance.ReadLocationData(ip, port);
-            return ToXml(InfoModel.Instance.Location);
-        }
+        //// POST: First/Search
+        ////Is it needed? Maybe delete this
+        //[HttpPost]
+        //public string Search(string ip, int port)
+        //{
+        //    InfoModel.Instance.ReadLocationData(ip, port);
+        //    return ToXml(InfoModel.Instance.Location);
+        //}
 
     }
 }
