@@ -3,68 +3,57 @@
     ViewBag.Title = "display";
 }
 
+<style>
+    html, body {
+        height: 100%;
+        width: 100%;
+    }
+</style>
+
 <html>
 <body background="~/worldMap.png" style="background-size:cover">
-    <h2>display</h2>
     <div>
-        <h2>Location json Get</h2>
+        <h2></h2>
         <table>
             <tr>
                 <td>Lat:  </td>
-                <td><p type="text" id="latId" size="5"></p></td>
+                <td><p type="text" id="LatId" size="5"></p></td>
             </tr>
             <tr>
-                <td>Name:  </td>
-                <td><p type="text" id="prodName" size="5"></p></td>
-            </tr>
-            <tr>
-                <td>Salary:  </td>
-                <td><p type="text" id="prodSalary" size="5"></p></td>
+                <td>Lon:  </td>
+                <td><p type="text" id="LonId" size="5"></p></td>
             </tr>
         </table>
-
-        <div>
-            <h2>Search  by  Name</h2>
-            <p> Name: </p>
-            <input type="text" id="NameID" size="5" />
-            <input type="button" id="btnSearch" value="Search" />
-            <ul id="lstProducts"></ul>
-        </div>
-
+        <img id="Cookie" src="~/Cookie1.png" width="0" height="0" />
     </div>
-
+    <canvas id="canvas" height="700" widht="1000"></canvas>
     <script>
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    var img = document.getElementById("Cookie");
     var IntervalTime = @Session["time"] * 1000
     myTimer = (function () {
         $.post( "@Url.Action("GetLocation")").done(function (xml) {
                 var xmlDoc = $.parseXML( xml ),
                 $xml = $( xmlDoc ),
-                Lat = $xml.find( "Lat" ).text();
-                Lon = $xml.find( "Lon" ).text();
-
-                $("#latId").text(Lat);
-                $("#lonId").text(LastName);
-
+                Lat = $xml.find("Lat").text();
+                Lon = $xml.find("Lon").text();
+            Lat = ((parseFloat(Lat) + 90) * (canvas.width) / 180);
+                Lon = ((parseFloat(Lon) + 180) * (canvas.width) / 360.0);
+                $("#LatId").text(Lat);
+            $("#LonId").text(Lon);
+            context.drawImage(img, Lon, Lat, 22, 15);
         });
     });
 
     setInterval(myTimer, IntervalTime);
     myTimer();
 
-    $("#btnSearch").click(function () {
-        var input = {
-            name: $("#NameID").val(),
-        };
-        $.post("@Url.Action("Search", "First")", input).done(function (data) {
-            var xmlDoc = $.parseXML(data),
-                $xml = $(xmlDoc),
-                FirstName = $xml.find("FirstName").text();
-            LastName = $xml.find("LastName").text();
-            Salary = $xml.find("Salary").text();
-
-            $("#lstProducts").append("<li>" + FirstName + " " + LastName + " : $" + Salary + "</li>");
-        });
-    });
+        //function resizeCanvas() {
+        //    canvas.width = window.innerWidth;
+        //    canvas.height = window.innerHeight;
+        //}
+        //resizeCanvas();
 
     </script>
 </body>
