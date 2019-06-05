@@ -47,7 +47,8 @@ namespace Ajax_Minimal.Controllers
 
             Session["time"] = time;
 
-            Session["eof"] = false;
+            Session["eof"] = "False";
+            ViewBag.eof = "False";
 
             return View();
         }
@@ -115,7 +116,8 @@ namespace Ajax_Minimal.Controllers
             FileManagerModel.Instance.GetNextLine();
             if (FileManagerModel.Instance.EndOfFile)
             {
-                Session["eof"] = true;
+                Session["eof"] = "True";
+                ViewBag.eof = "True";
             }
             return ToXml(FileManagerModel.Instance.CurrentLine);
         }

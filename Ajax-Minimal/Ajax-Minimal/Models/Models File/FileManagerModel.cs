@@ -27,7 +27,6 @@ namespace Ajax_Minimal.Models.Models_File
         private StatsFileManager statsFileManager;
 
         public string Path { get; set; }
-        private StatsFileManager fileManager;
         public IList<FlightStats> StatsList { get; private set; }
 
         public FlightStats CurrentLine { get; private set; }
@@ -62,12 +61,15 @@ namespace Ajax_Minimal.Models.Models_File
 
         public void GetNextLine()
         {
-            CurrentLine = StatsList[linesIterIndex];
-            linesIterIndex++;
-
-            if (linesIterIndex > StatsList.Count)
+            if (!EndOfFile)
             {
-                EndOfFile = true;
+                CurrentLine = StatsList[linesIterIndex];
+                linesIterIndex++;
+
+                if (linesIterIndex >= StatsList.Count)
+                {
+                    EndOfFile = true;
+                }
             }
         }
 

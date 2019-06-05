@@ -34,9 +34,10 @@
     var IntervalTime = @Session["time"] * 1000
         var printed = false;
         myTimer = (function () {
-            if ("@Session["eof"]" == "False") {
+            if (@ViewBag.eof === "False") {
                 console.log("calling GetNextStats");
-                console.log("@Session["eof"]" == "False");
+                console.log(@ViewBag.eof);
+                console.log(@ViewBag.eof === "False");
                 $.post("@Url.Action("GetNextStats")").done(function (xml) {
                     var xmlDoc = $.parseXML(xml),
                         $xml = $(xmlDoc),
