@@ -13,7 +13,7 @@
 <html>
 <body background="~/worldMap.png" style="background-size:cover">
     <div>
-        <h2>Hi this is display save</h2>
+        <h2 id="h2Text">Hi this is display save</h2>
         <table>
             <tr>
                 <td>Lat:  </td>
@@ -34,8 +34,28 @@
     var IntervalTime = @Session["time"] * 1000;
     var currentTime = 0;
     var save = true;
-    myTimer = (function () {
-        $.post( "@Url.Action("GetLocation")").done(function (xml) {
+
+        myTimerSave = (function () {
+            if (save) {
+                alert("This is save mode " + currentTime)
+                $.post("@Url.Action("GetAndSaveStats")").done(function (xml) {
+                    var xmlDoc = $.parseXML(xml),
+                        $xml = $(xmlDoc),
+                        Lat = $xml.find("Lat").text();
+                    Lon = $xml.find("Lon").text();
+                    Lat = ((parseFloat(Lat) + 90) * (canvas.width) / 180);
+                    Lon = ((parseFloat(Lon) + 180) * (canvas.width) / 360.0);
+                    $("#LatId").text(Lat);
+                    $("#LonId").text(Lon);
+                    //$("#h2Text").text()
+                    context.drawImage(img, Lon, Lat, 22, 15);
+                    currentTime += @Session["time"];
+                    if (currentTime >= @Session["duration"]) {
+                        save = false;
+                    }
+                });
+            } else {
+                $.post( "@Url.Action("GetLocation")").done(function (xml) {
                 var xmlDoc = $.parseXML( xml ),
                 $xml = $( xmlDoc ),
                 Lat = $xml.find("Lat").text();
@@ -46,36 +66,11 @@
                 $("#LonId").text(Lon);
             context.drawImage(img, Lon, Lat, 22, 15);
         });
-    });
-
-    myTimerSave = (function () {
-        $.post( "@Url.Action("GetAndSaveStats")").done(function (xml) {
-                var xmlDoc = $.parseXML( xml ),
-                $xml = $( xmlDoc ),
-                Lat = $xml.find("Lat").text();
-                Lon = $xml.find("Lon").text();
-                Lat = ((parseFloat(Lat) + 90) * (canvas.width) / 180);
-                Lon = ((parseFloat(Lon) + 180) * (canvas.width) / 360.0);
-                $("#LatId").text(Lat);
-                $("#LonId").text(Lon);
-            context.drawImage(img, Lon, Lat, 22, 15);
-            currentTime += Session["time"];
-            if (save && currentTime >= Session["duration"]) {
-                save = false;
             }
         });
-    });
 
-    setInterval(myTimer, IntervalTime);
     setInterval(myTimerSave, IntervalTime);
-    myTimer();
-    if (save && currentTime >= Session["duration"]) {
-        save = false;
-    }
-    else
-    {
-        myTimer();
-    }
+    myTimerSave();
     </script>
 </body>
 </html>

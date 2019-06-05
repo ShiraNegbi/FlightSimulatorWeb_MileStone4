@@ -31,7 +31,7 @@ namespace Ajax_Minimal.Models.State_Save
                 file.Write(" ");
                 file.Write(stats.Rudder);
                 file.Write(" ");
-                file.WriteLine(stats.Throttle);
+                file.Write(stats.Throttle);
                 file.WriteLine();
             }
         }

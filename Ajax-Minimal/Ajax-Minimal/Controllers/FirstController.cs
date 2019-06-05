@@ -81,6 +81,15 @@ namespace Ajax_Minimal.Controllers
             return ToXml(location);
         }
 
+        [HttpPost]
+        public string GetAndSaveStats()
+        {
+            InfoModel.Instance.ReadStatsData();
+            FlightStats stats = InfoModel.Instance.FlightStats;
+            FileManagerModel.Instance.SaveLine(stats);
+            return ToXml(stats);
+        }
+
         private string ToXml(Location loc)
         {
             //Initiate XML stuff
@@ -98,7 +107,7 @@ namespace Ajax_Minimal.Controllers
             writer.Flush();
             return sb.ToString();
         }
-        private string ToXml(Employee employee)
+        private string ToXml(FlightStats stats)
         {
             //Initiate XML stuff
             StringBuilder sb = new StringBuilder();
@@ -106,15 +115,18 @@ namespace Ajax_Minimal.Controllers
             XmlWriter writer = XmlWriter.Create(sb, settings);
 
             writer.WriteStartDocument();
-            writer.WriteStartElement("Employess");
+            writer.WriteStartElement("FlightStats");
 
-            employee.ToXml(writer);
+            stats.ToXml(writer);
+
 
             writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Flush();
             return sb.ToString();
         }
+
+
 
 
         //// POST: First/Search
