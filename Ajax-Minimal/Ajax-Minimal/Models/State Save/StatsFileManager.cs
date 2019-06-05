@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,27 +8,34 @@ namespace Ajax_Minimal.Models.State_Save
 {
     public class StatsFileManager
     {
-        public StatsFileManager(string path)
+        public const string SCENARIO_FILE = "~/App_Data/{0}.txt";   // The Path of the Secnario
+
+        public StatsFileManager(/*string path*/)
         {
-            this.path = path;
+            //this.path = path;
         }
 
-        private string path;
-        public void SaveLine(FlightStats stats)
+        //private string path;
+        public void CreateFile(string path)
         {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(path, true))
+       //     System.IO.File.WriteAllText($"~/App_Data/{path}.txt", string.Empty);
+        }
+        public void SaveLine(string path, FlightStats stats)
+        {
+            string appDataPath = HttpContext.Current.Server.MapPath(String.Format(SCENARIO_FILE, path));
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(appDataPath, true))
             {
                 file.Write(stats.Location.Lat);
-                Console.Write(" ");
-                file.WriteLine(stats.Location.Lon);
-                Console.Write(" ");
-                file.WriteLine(stats.Rudder);
-                Console.Write(" ");
+                file.Write(" ");
+                file.Write(stats.Location.Lon);
+                file.Write(" ");
+                file.Write(stats.Rudder);
+                file.Write(" ");
                 file.WriteLine(stats.Throttle);
-                Console.WriteLine();
+                file.WriteLine();
             }
         }
-        public IList<FlightStats> ReadLines()
+        public IList<FlightStats> ReadLines(string path)
         {
             string[] lines = System.IO.File.ReadAllLines(path);// reading all the lines of the file
             List<FlightStats> flightStatsList = new List<FlightStats>(lines.Length);
@@ -49,3 +57,4 @@ namespace Ajax_Minimal.Models.State_Save
         }
     }
 }
+

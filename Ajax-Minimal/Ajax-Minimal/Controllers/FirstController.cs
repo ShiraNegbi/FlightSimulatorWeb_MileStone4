@@ -7,18 +7,28 @@ using System.Web;
 using System.Web.Mvc;
 using System.Xml;
 using System.Drawing;
+using Ajax_Minimal.Models.Models_File;
+using Ajax_Minimal.Models.State_Save;
+
 namespace Ajax_Minimal.Controllers
 {
     public class FirstController : Controller
     {
         private static Random rnd = new Random();
 
-        // GET: First
-        public ActionResult Index()
+        //// GET: First
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
+
+        [HttpGet]
+        public ActionResult index(string ip, int port)
         {
+            InfoModel.Instance.Ip = ip;
+            InfoModel.Instance.Port = port.ToString();
             return View();
         }
-
         [HttpGet]
         public ActionResult display(string ip, int port, int time)
         {
@@ -32,6 +42,34 @@ namespace Ajax_Minimal.Controllers
 
             return View();
         }
+        [HttpGet]
+        public ActionResult displaySave(string ip, int port, int time, int duration, string fileName)
+        {
+            InfoModel.Instance.Ip = ip;
+            InfoModel.Instance.Port = port.ToString();
+            Session["time"] = time;
+            Session["duration"] = duration;
+            FileManagerModel.Instance.Path = fileName;
+            FileManagerModel.Instance.CreateFile();
+
+            /*after delete this immediatly after you know it works*/
+            FlightStats flightStats = new FlightStats()
+            {
+                Location = new Location()
+                {
+                    Lat = 42,
+                    Lon = 6
+                },
+                Throttle = 9,
+                Rudder = 53
+            };
+            FileManagerModel.Instance.SaveLine(flightStats);
+            /*till here thanks*/
+            return View();
+        }
+
+
+
 
 
         //[HttpPost]

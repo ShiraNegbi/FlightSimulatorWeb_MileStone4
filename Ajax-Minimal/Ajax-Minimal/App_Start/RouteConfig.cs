@@ -15,18 +15,19 @@ namespace Ajax_Minimal
 
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-
             routes.MapRoute("display", "display/{ip}/{port}/{time}",
             defaults: new { controller = "First", action = "display" });
-             
+
             routes.MapRoute("index", "display/{ip}/{port}",
             defaults: new { controller = "First", action = "index" });
 
+            routes.MapRoute("displaySave", "save/{ip}/{port}/{time}/{duration}/{fileName}",
+            defaults: new { Controller = "First", action = "displaySave" });
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "First", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "First", action = "None", id = UrlParameter.Optional }
             );
         }
     }
