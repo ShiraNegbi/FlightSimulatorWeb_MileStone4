@@ -9,6 +9,7 @@ using System.Xml;
 using System.Drawing;
 using Ajax_Minimal.Models.Models_File;
 using Ajax_Minimal.Models.State_Save;
+using System.Net;
 
 namespace Ajax_Minimal.Controllers
 {
@@ -25,8 +26,29 @@ namespace Ajax_Minimal.Controllers
         [HttpGet]
         public ActionResult index(string ip, int port)
         {
-            InfoModel.Instance.Ip = ip;
-            InfoModel.Instance.Port = port;
+            IPAddress checkIp;
+            bool isIp = IPAddress.TryParse(ip, out checkIp);
+            if (isIp)
+            {
+                InfoModel.Instance.Ip = ip;
+                InfoModel.Instance.Port = port;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("displayLoad", new { fileName = ip, time = port });
+            }
+        }
+        [HttpGet]
+        public ActionResult displayLoad(string fileName, int time)
+        {
+            FileManagerModel.Instance.Path = fileName;
+            FileManagerModel.Instance.CreateFile();
+
+            Session["time"] = time;
+
+            Session["eof"] = false;
+
             return View();
         }
         [HttpGet]
@@ -53,14 +75,11 @@ namespace Ajax_Minimal.Controllers
             FileManagerModel.Instance.CreateFile();
 
             /*after delete this immediatly after you know it works*/
-            FlightStats flightStats;
+            //FlightStats flightStats;
             //FileManagerModel.Instance.SaveLine(flightStats);
             /*till here thanks*/
             return View();
         }
-
-
-
 
 
         //[HttpPost]
@@ -88,6 +107,17 @@ namespace Ajax_Minimal.Controllers
             FlightStats stats = InfoModel.Instance.FlightStats;
             FileManagerModel.Instance.SaveLine(stats);
             return ToXml(stats);
+        }
+
+        [HttpPost]
+        public string GetNextStats()
+        {
+            FileManagerModel.Instance.GetNextLine();
+            if (FileManagerModel.Instance.EndOfFile)
+            {
+                Session["eof"] = true;
+            }
+            return ToXml(FileManagerModel.Instance.CurrentLine);
         }
 
         private string ToXml(Location loc)
@@ -125,9 +155,6 @@ namespace Ajax_Minimal.Controllers
             writer.Flush();
             return sb.ToString();
         }
-
-
-
 
         //// POST: First/Search
         ////Is it needed? Maybe delete this

@@ -37,7 +37,8 @@ namespace Ajax_Minimal.Models.State_Save
         }
         public IList<FlightStats> ReadLines(string path)
         {
-            string[] lines = System.IO.File.ReadAllLines(path);// reading all the lines of the file
+            string appDataPath = HttpContext.Current.Server.MapPath(String.Format(SCENARIO_FILE, path));
+            string[] lines = System.IO.File.ReadAllLines(appDataPath);// reading all the lines of the file
             List<FlightStats> flightStatsList = new List<FlightStats>(lines.Length);
 
             foreach (string line in lines)
