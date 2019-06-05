@@ -37,7 +37,6 @@
 
         myTimerSave = (function () {
             if (save) {
-                alert("This is save mode " + currentTime)
                 $.post("@Url.Action("GetAndSaveStats")").done(function (xml) {
                     var xmlDoc = $.parseXML(xml),
                         $xml = $(xmlDoc),
@@ -47,7 +46,6 @@
                     Lon = ((parseFloat(Lon) + 180) * (canvas.width) / 360.0);
                     $("#LatId").text(Lat);
                     $("#LonId").text(Lon);
-                    //$("#h2Text").text()
                     context.drawImage(img, Lon, Lat, 22, 15);
                     currentTime += @Session["time"];
                     if (currentTime >= @Session["duration"]) {

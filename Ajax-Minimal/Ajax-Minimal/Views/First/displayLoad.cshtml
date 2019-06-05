@@ -3,5 +3,61 @@
     ViewBag.Title = "displayLoad";
 }
 
-<h2>displayLoad</h2>
+<style>
+    html, body {
+        height: 100%;
+        width: 100%;
+    }
+</style>
 
+<html>
+<body background="~/worldMap.png" style="background-size:cover">
+    <div>
+        <h2>Hi this is display load</h2>
+        <table>
+            <tr>
+                <td>Lat:  </td>
+                <td><p type="text" id="LatId" size="5"></p></td>
+            </tr>
+            <tr>
+                <td>Lon:  </td>
+                <td><p type="text" id="LonId" size="5"></p></td>
+            </tr>
+        </table>
+        <img id="Cookie" src="~/Cookie1.png" width="0" height="0" />
+    </div>
+    <canvas id="canvas" height="700" widht="1000"></canvas>
+    <script>
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    var img = document.getElementById("Cookie");
+    var IntervalTime = @Session["time"] * 1000
+        var printed = false;
+        myTimer = (function () {
+            if (!@Session["eof"]) {
+                $.post("@Url.Action("GetNextStats")").done(function (xml) {
+                    var xmlDoc = $.parseXML(xml),
+                        $xml = $(xmlDoc),
+                        Lat = $xml.find("Lat").text();
+                    Lon = $xml.find("Lon").text();
+                    Lat = ((parseFloat(Lat) + 90) * (canvas.width) / 180);
+                    Lon = ((parseFloat(Lon) + 180) * (canvas.width) / 360.0);
+                    $("#LatId").text(Lat);
+                    $("#LonId").text(Lon);
+                    context.drawImage(img, Lon, Lat, 22, 15);
+                });
+            }
+            else
+            {
+                if (!printed) {
+                    alert("Successfully displayed all the flight data. :D");
+                    printed = true;
+                }
+            }
+    });
+
+    setInterval(myTimer, IntervalTime);
+    myTimer();
+    </script>
+</body>
+</html>
