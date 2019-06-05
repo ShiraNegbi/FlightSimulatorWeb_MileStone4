@@ -36,6 +36,7 @@
         myTimer = (function () {
             if ("@Session["eof"]" == "False") {
                 console.log("calling GetNextStats");
+                console.log("@Session["eof"]" == "False");
                 $.post("@Url.Action("GetNextStats")").done(function (xml) {
                     var xmlDoc = $.parseXML(xml),
                         $xml = $(xmlDoc),
@@ -50,14 +51,15 @@
             }
             else
             {
-                if (!printed) {
-                    alert("Successfully displayed all the flight data. :D");
-                    printed = true;
-                }
+               // if (!printed) {
+                alert("Successfully displayed all the flight data. :D");
+                clearInterval(myVar)
+                 //   printed = true;
+                //}
             }
     });
 
-    setInterval(myTimer, IntervalTime);
+    var myVar = setInterval(myTimer, IntervalTime);
     myTimer();
     </script>
 </body>
