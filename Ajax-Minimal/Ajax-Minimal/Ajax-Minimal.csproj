@@ -113,10 +113,11 @@
     </Compile>
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\FlightStatsReader.cs" />
     <Compile Include="Models\Models File\FileManagerModel.cs" />
     <Compile Include="Models\Models File\InfoModel.cs" />
     <Compile Include="Models\Location.cs" />
-    <Compile Include="Models\LocationReadModel.cs" />
+    <Compile Include="Models\LocationReader.cs" />
     <Compile Include="Models\State Save\FlightStats.cs" />
     <Compile Include="Models\State Save\StatsFileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Ajax_Minimal.Models
 {
-    public class LocationReadModel
+    public class LocationReader
     {
         private static string GET_LAT = "get position/latitude-deg \r\n";
         private static string GET_LON = "get position/longitude-deg \r\n";
@@ -17,8 +17,8 @@ namespace Ajax_Minimal.Models
             string latString = Client.Instance.DoMessage(ip, port, GET_LAT);
             string lonString = Client.Instance.DoMessage(ip, port, GET_LON);
 
-            double lat = resultStringToDouble(latString);
-            double lon = resultStringToDouble(lonString);
+            double lat = ResultStringToDouble(latString);
+            double lon = ResultStringToDouble(lonString);
 
             Location location = new Location
             {
@@ -29,7 +29,7 @@ namespace Ajax_Minimal.Models
             this.Location = location;
         }
 
-        private static double resultStringToDouble(string resultString)
+        protected static double ResultStringToDouble(string resultString)
         {
             /*
              * The result string comes in the following format:

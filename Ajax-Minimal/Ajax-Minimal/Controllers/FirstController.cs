@@ -26,14 +26,14 @@ namespace Ajax_Minimal.Controllers
         public ActionResult index(string ip, int port)
         {
             InfoModel.Instance.Ip = ip;
-            InfoModel.Instance.Port = port.ToString();
+            InfoModel.Instance.Port = port;
             return View();
         }
         [HttpGet]
         public ActionResult display(string ip, int port, int time)
         {
             InfoModel.Instance.Ip = ip;
-            InfoModel.Instance.Port = port.ToString();
+            InfoModel.Instance.Port = port;
             //InfoModel.Instance.time = time;
 
             //InfoModel.Instance.ReadLocationData(ip,port);
@@ -46,24 +46,15 @@ namespace Ajax_Minimal.Controllers
         public ActionResult displaySave(string ip, int port, int time, int duration, string fileName)
         {
             InfoModel.Instance.Ip = ip;
-            InfoModel.Instance.Port = port.ToString();
+            InfoModel.Instance.Port = port;
             Session["time"] = time;
             Session["duration"] = duration;
             FileManagerModel.Instance.Path = fileName;
             FileManagerModel.Instance.CreateFile();
 
             /*after delete this immediatly after you know it works*/
-            FlightStats flightStats = new FlightStats()
-            {
-                Location = new Location()
-                {
-                    Lat = 42,
-                    Lon = 6
-                },
-                Throttle = 9,
-                Rudder = 53
-            };
-            FileManagerModel.Instance.SaveLine(flightStats);
+            FlightStats flightStats;
+            //FileManagerModel.Instance.SaveLine(flightStats);
             /*till here thanks*/
             return View();
         }
