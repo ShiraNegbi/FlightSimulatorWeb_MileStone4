@@ -35,6 +35,7 @@
         var printed = false;
         myTimer = (function () {
             if ("@Session["eof"]" == "False") {
+                console.log("calling GetNextStats");
                 $.post("@Url.Action("GetNextStats")").done(function (xml) {
                     var xmlDoc = $.parseXML(xml),
                         $xml = $(xmlDoc),

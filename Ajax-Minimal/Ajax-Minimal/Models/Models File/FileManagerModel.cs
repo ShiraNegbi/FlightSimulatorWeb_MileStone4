@@ -47,7 +47,7 @@ namespace Ajax_Minimal.Models.Models_File
         public void CreateFile()
         {
             //this.statsFileManager.CreateFile(Path);
-            this.statsFileManager.ReadLines(Path);
+          StatsList =  this.statsFileManager.ReadLines(Path);
         }
         public void SaveLine(FlightStats stats)
         {
